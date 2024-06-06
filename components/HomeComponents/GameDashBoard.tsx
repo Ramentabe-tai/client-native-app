@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import MissionComponents from './MissionComponents';
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import MissionComponents from "./MissionComponents";
 
 const GameDashBoard = () => {
-
   const [experience, setExperience] = useState(10);
   const [maxExperience, setMaxExperience] = useState(80);
   const [experienceWidth, setExperienceWidth] = useState(0);
@@ -34,21 +33,12 @@ const GameDashBoard = () => {
     setExperienceWidth(experienceWidthPercentage);
   }, [experience]);
 
-
-
   return (
     <View style={styles.GameDashBoardSection}>
       <View style={styles.XPSection}>
         <Text style={styles.level}>level</Text>
-        <View
-          style={[
-            styles.experienceBarContainer,
-            { width: `${maxExperience}%` },
-          ]}
-        >
-          <View
-            style={[styles.experienceBarFill, { width: `${experienceWidth}%` }]}
-          ></View>
+        <View style={[styles.experienceBarContainer, { width: `${maxExperience}%` }]}>
+          <View style={[styles.experienceBarFill, { width: `${experienceWidth}%` }]}></View>
         </View>
       </View>
       <View style={styles.MissionSection}>
@@ -62,9 +52,9 @@ const GameDashBoard = () => {
       </View>
     </View>
   );
-}
+};
 
-export default GameDashBoard
+export default GameDashBoard;
 
 const styles = StyleSheet.create({
   GameDashBoardSection: {
@@ -93,7 +83,6 @@ const styles = StyleSheet.create({
     height: "80%",
     borderColor: "black",
     alignItems: "center",
-    justifyContent: "center"
-
-  }
+    justifyContent: "center",
+  },
 });
