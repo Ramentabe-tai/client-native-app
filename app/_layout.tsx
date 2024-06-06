@@ -46,7 +46,7 @@ export default function RootLayout() {
                   style={{ width: 30, height: 30, borderRadius: 20 }}
                 />
               ),
-              headerRight: () => <Ionicons name='settings-outline' size={24} color='black' />,
+              headerTitle: () => null,
               headerTitleAlign: "center",
             }}
           />
@@ -61,7 +61,7 @@ export default function RootLayout() {
           style={styles.bottomSheet}
         >
           <View style={styles.bottomSheetContent}>
-            <Text>Chart content goes here</Text>
+            <Text>Input content goes here</Text>
           </View>
         </BottomSheet>
       </GestureHandlerRootView>
