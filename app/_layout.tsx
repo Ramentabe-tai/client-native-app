@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import { Image } from "react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import FloatButton from "@/components/fab/FloatButton";
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
@@ -28,6 +28,7 @@ export default function RootLayout() {
         />
         <Stack.Screen name='error' options={{ headerTitle: "Error", headerTitleAlign: "center" }} />
       </Stack>
+      <FloatButton />
     </QueryClientProvider>
   );
 }
