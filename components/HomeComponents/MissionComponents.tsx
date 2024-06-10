@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { CheckBox } from "react-native-elements";
-const MissionComponents = ({ mission }) => {
+import { CheckBox } from "@rneui/themed";
+const MissionComponents = ({ mission }: { mission: any }) => { // fix types later
   const [isChecked, setIsChecked] = useState(false);
 
 
