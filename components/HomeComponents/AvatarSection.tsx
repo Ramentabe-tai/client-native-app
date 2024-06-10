@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, Image } from "react-native";
+import React, { useState } from "react";
 
 const AvatarSection = () => {
-  const [balance, setBalance] = useState(10000000)
+  const [balance, setBalance] = useState<number>(10000000);
 
-  const formatBalance = (balance) => {
+  const formatBalance = (balance: number) => {
     return new Intl.NumberFormat("en-US").format(balance);
   };
-  
+
   return (
     <View style={styles.AvatarBalanceSection}>
       <View style={styles.AvatarSection}>
@@ -15,11 +15,11 @@ const AvatarSection = () => {
       </View>
       <View style={styles.balanceSection}>
         <Text style={styles.balanceText}>貯金額</Text>
-        <Text style={styles.balance}>¥{ formatBalance(balance)}</Text>
+        <Text style={styles.balance}>¥{formatBalance(balance)}</Text>
       </View>
     </View>
   );
-}
+};
 
 export default AvatarSection;
 
@@ -52,10 +52,9 @@ const styles = StyleSheet.create({
   balance: {
     fontSize: 25,
     backgroundColor: "white",
-    
+
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 20
-    
+    borderRadius: 20,
   },
 });

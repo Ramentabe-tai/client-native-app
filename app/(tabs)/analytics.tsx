@@ -1,12 +1,11 @@
-import { View, Text } from "react-native";
 import React from "react";
+import Transactions from '@/components/flatList/Transactions'
+import LineChart from "@/components/charts/LineChart";
 
-const analytics = () => {
-  return (
-    <View>
-      <Text>analytics</Text>
-    </View>
-  );
-};
+export default function Analytics() {
 
-export default analytics;
+  return (<>
+    <LineChart />
+    <Transactions />
+  </>)
+}
