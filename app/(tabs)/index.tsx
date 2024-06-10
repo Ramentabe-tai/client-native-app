@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import AvatarSection from "@/components/HomeComponents/AvatarSection";
+import { Link } from "expo-router";
 
 export default function index() {
   return (
@@ -9,6 +10,7 @@ export default function index() {
         <AvatarSection />
       </View>
       <View style={styles.GameDashBoard}></View>
+      <Link href="/LoginPage">Login</Link>
     </View>
   );
 }

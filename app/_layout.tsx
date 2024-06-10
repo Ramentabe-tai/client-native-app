@@ -4,8 +4,11 @@ import { Stack } from "expo-router";
 import { Image, View, StyleSheet, Text } from "react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FloatButton from "@/components/fab/FloatButton";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+} from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 
@@ -19,7 +22,9 @@ export default function RootLayout() {
   }, []);
 
   const renderBackdrop = useCallback(
-    (props: React.JSX.IntrinsicAttributes & BottomSheetDefaultBackdropProps) => (
+    (
+      props: React.JSX.IntrinsicAttributes & BottomSheetDefaultBackdropProps
+    ) => (
       <BottomSheetBackdrop
         {...props}
         disappearsOnIndex={-1}
@@ -36,7 +41,7 @@ export default function RootLayout() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack screenOptions={{ headerShadowVisible: false }}>
           <Stack.Screen
-            name='(tabs)'
+            name="(tabs)"
             options={{
               headerLeft: () => (
                 <Image
@@ -50,12 +55,19 @@ export default function RootLayout() {
               headerTitleAlign: "center",
             }}
           />
-          <Stack.Screen name='error' options={{ headerTitle: "Error", headerTitleAlign: "center" }} />
+          <Stack.Screen
+            name="error"
+            options={{ headerTitle: "Error", headerTitleAlign: "center" }}
+          />
+          <Stack.Screen
+            name="LoginPage"
+            options={{ headerTitle: "Login", headerTitleAlign: "center" }}
+          />
         </Stack>
         <FloatButton onOpenBottomSheet={handleOpenBottomSheet} />
         <BottomSheet
           ref={bottomSheetRef}
-          snapPoints={['50%']}
+          snapPoints={["50%"]}
           index={-1} // Initial state should be closed
           backdropComponent={renderBackdrop}
           style={styles.bottomSheet}
@@ -75,7 +87,7 @@ const styles = StyleSheet.create({
   },
   bottomSheetContent: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
