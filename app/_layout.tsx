@@ -3,8 +3,12 @@ import { Stack } from "expo-router";
 import { Image, View, StyleSheet, Text } from "react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FloatButton from "@/components/fab/FloatButton";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+} from "@gorhom/bottom-sheet";
+
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import { Portal, Provider } from 'react-native-paper';
@@ -28,7 +32,9 @@ export default function RootLayout() {
   }, []);
 
   const renderBackdrop = useCallback(
-    (props: React.JSX.IntrinsicAttributes & BottomSheetDefaultBackdropProps) => (
+    (
+      props: React.JSX.IntrinsicAttributes & BottomSheetDefaultBackdropProps
+    ) => (
       <BottomSheetBackdrop
         {...props}
         disappearsOnIndex={-1}
@@ -46,6 +52,7 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{ flex: 1 }}>
+
         <Provider>
           <Stack screenOptions={{ headerShadowVisible: false }}>
             <Stack.Screen
@@ -64,6 +71,10 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen name='error' options={{ headerTitle: "Error", headerTitleAlign: "center" }} />
+            <Stack.Screen
+            name="LoginPage"
+            options={{ headerTitle: "Login", headerTitleAlign: "center" }}
+          />
           </Stack>
           <FloatButton
             onOpenSavingAction={handleOpenSavingSheet}
@@ -98,6 +109,7 @@ export default function RootLayout() {
             </BottomSheet>
           </Portal>
         </Provider>
+
       </GestureHandlerRootView>
     </QueryClientProvider>
   );
@@ -109,7 +121,7 @@ const styles = StyleSheet.create({
   },
   bottomSheetContent: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

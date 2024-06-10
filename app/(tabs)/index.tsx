@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import AvatarSection from "@/components/HomeComponents/AvatarSection";
+import { Link } from "expo-router";
 
 import GameDashBoard from "@/components/HomeComponents/GameDashBoard";
 
@@ -19,6 +20,8 @@ export default function index() {
       <View style={styles.AvatarSection}>
         <AvatarSection />
       </View>
+      <View style={styles.GameDashBoard}></View>
+      <Link href="/LoginPage">Login</Link>
       <View style={styles.GameDashBoard}>
         <GameDashBoard />
       </View>
