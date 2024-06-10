@@ -3,6 +3,17 @@ import React from "react";
 import AvatarSection from "@/components/HomeComponents/AvatarSection";
 import { Link } from "expo-router";
 
+import GameDashBoard from "@/components/HomeComponents/GameDashBoard";
+
+
+type Movie = {
+  id: string;
+  title: string;
+  releaseYear: string;
+};
+
+
+
 export default function index() {
   return (
     <View style={styles.HomeSection}>
@@ -11,6 +22,9 @@ export default function index() {
       </View>
       <View style={styles.GameDashBoard}></View>
       <Link href="/LoginPage">Login</Link>
+      <View style={styles.GameDashBoard}>
+        <GameDashBoard />
+      </View>
     </View>
   );
 }
@@ -19,15 +33,14 @@ const styles = StyleSheet.create({
   HomeSection: {
     width: "100%",
     height: "100%",
-
     flexDirection: "column",
   },
   AvatarSection: {
-    flex: 1,
+    height: "45%",
     backgroundColor: "lightblue",
   },
   GameDashBoard: {
-    flex: 1,
+    height: "55%",
     backgroundColor: "lightgray",
   },
 });
