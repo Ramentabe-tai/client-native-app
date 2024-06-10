@@ -4,17 +4,18 @@ import { Octicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const DURATION = 400;
-const TRANSLATE_Y = -80;
+const TRANSLATE_Y = -70; // Define the consistent translation distance
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 type FloatButtonProps = {
-    onOpenBottomSheet: () => void;
-    onOpenSecondAction: () => void;
+    onOpenSavingAction: () => void;
+    onOpenExpanseAction: () => void;
+    setIsOpened: (isOpen: boolean) => void;
+    isOpened: boolean;
 };
 
-export default function FloatButton({ onOpenBottomSheet, onOpenSecondAction }: FloatButtonProps) {
-    const [isOpened, setIsOpened] = useState(false);
+export default function FloatButton({ onOpenSavingAction, onOpenExpanseAction, setIsOpened, isOpened }: FloatButtonProps) {
     const transYChart = useSharedValue(0);
     const transYSecondButton = useSharedValue(0);
 
@@ -25,7 +26,7 @@ export default function FloatButton({ onOpenBottomSheet, onOpenSecondAction }: F
     useEffect(() => {
         if (isOpened) {
             transYChart.value = withTiming(TRANSLATE_Y, { duration: DURATION });
-            transYSecondButton.value = withTiming(TRANSLATE_Y * 1.8, { duration: DURATION });
+            transYSecondButton.value = withTiming(TRANSLATE_Y * 2, { duration: DURATION }); // Ensure equal spacing
         } else {
             transYChart.value = withTiming(0, { duration: DURATION });
             transYSecondButton.value = withTiming(0, { duration: DURATION });
@@ -52,13 +53,19 @@ export default function FloatButton({ onOpenBottomSheet, onOpenSecondAction }: F
                 <Octicons name="plus" size={36} color="white" />
             </Pressable>
             <AnimatedPressable
-                onPress={onOpenBottomSheet} // Open the bottom sheet when chart button is pressed
+                onPress={() => {
+                    setIsOpened(false);
+                    onOpenSavingAction();
+                }} // Open the saving action when chart button is pressed
                 style={[styles.chartButton, rChartAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
             >
                 <MaterialIcons name="add-chart" size={32} color="white" />
             </AnimatedPressable>
             <AnimatedPressable
-                onPress={onOpenSecondAction} // Open the second action when the second button is pressed
+                onPress={() => {
+                    setIsOpened(false);
+                    onOpenExpanseAction();
+                }} // Open the expanse action when the second button is pressed
                 style={[styles.secondButton, rSecondButtonAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
             >
                 <FontAwesome name="bar-chart" size={28} color="white" />
@@ -72,7 +79,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 30,
         right: 20,
-        zIndex: 1,
+        zIndex: 1, // Ensure container has a zIndex
     },
     plusButton: {
         width: 60,
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-
+        zIndex: 2,
     },
     chartButton: {
         width: 48,
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 10,
-        right: 10,
+        right: 6,
     },
     secondButton: {
         width: 48,
@@ -103,6 +110,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 10,
-        right: 10,
+        right: 6,
     },
 });
