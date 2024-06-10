@@ -7,6 +7,7 @@ const DURATION = 400;
 const TRANSLATE_Y = -80;
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 type FloatButtonProps = {
     onOpenBottomSheet: () => void;
 };
@@ -42,7 +43,7 @@ export default function FloatButton({ onOpenBottomSheet }: FloatButtonProps) {
             </Pressable>
             <AnimatedPressable
                 onPress={onOpenBottomSheet} // Open the bottom sheet when chart button is pressed
-                style={[styles.chartButton, rChartAnimateStyles]}
+                style={[styles.chartButton, rChartAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
             >
                 <MaterialIcons name="add-chart" size={32} color="white" />
             </AnimatedPressable>
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 30,
         right: 20,
-
+        zIndex: 1, // Ensure container has a zIndex
     },
     plusButton: {
         width: 60,
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
+        zIndex: 2, // Ensure plusButton is on top
     },
     chartButton: {
         width: 48,
@@ -73,7 +75,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        zIndex: -1,
         bottom: 10,
         right: 10,
     },
