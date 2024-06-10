@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import { fetchData } from "@/utils/apis";
 import AvatarSection from "@/components/HomeComponents/AvatarSection";
 import GameDashBoard from "@/components/HomeComponents/GameDashBoard";
+import PlusBtn from "@/components/HomeComponents/PlusBtn";
 
 type Movie = {
   id: string;
@@ -41,6 +42,9 @@ export default function index() {
       <View style={styles.GameDashBoard}>
         <GameDashBoard />
       </View>
+      <View style={styles.PlusBtnSection}>
+        <PlusBtn />
+      </View>
     </View>
   );
 }
@@ -49,15 +53,20 @@ const styles = StyleSheet.create({
   HomeSection: {
     width: "100%",
     height: "100%",
-    
     flexDirection: "column",
   },
   AvatarSection: {
-    flex: 1,
+    height: "45%",
     backgroundColor: "lightblue",
   },
   GameDashBoard: {
-    flex: 1,
+    height: "55%",
     backgroundColor: "lightgray",
+  },
+
+  PlusBtnSection: {
+    position: "absolute",
+    bottom: 45,
+    right: 20
   },
 });

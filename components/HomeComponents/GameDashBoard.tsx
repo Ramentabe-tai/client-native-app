@@ -51,15 +51,17 @@ const GameDashBoard = () => {
           ></View>
         </View>
       </View>
-          <View style={styles.MissionSection}>
-              <Text>Mission</Text>
-        {MissionList.map((mission) => (
-          <MissionComponents  mission={mission} />
-        ))}
+      <View style={styles.MissionSection}>
+        <View style={styles.missionTextSection}>
+          <Text style={styles.missionText}>Mission</Text>
+        </View>
+        <View style={styles.missionList}>
+          {MissionList.map((mission) => (
+            <MissionComponents mission={mission} />
+          ))}
+        </View>
       </View>
-      <View>
-        <Text>pulsButton</Text>
-      </View>
+      
     </View>
   );
 }
@@ -82,18 +84,33 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     height: 20,
     borderRadius: 50,
+    borderColor: "black",
+    borderWidth: 1
   },
   experienceBarFill: {
     height: "100%",
     backgroundColor: "black",
     borderRadius: 50,
   },
-    MissionSection: {
-        width: "100%",
-        height: "80%",
-        borderColor: "black",
-        alignItems: "center",
-        justifyContent: "center"
-        
-  }
+  MissionSection: {
+    width: "100%",
+    height: "80%",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+  },
+  missionTextSection: {
+    height: "10%",
+    width: "100%",
+    alignItems: "center",
+    
+  },
+  missionText: {
+    fontSize: 25,
+  },
+  missionList: {
+    width: "100%",
+    height: "auto",
+    
+  },
 });
