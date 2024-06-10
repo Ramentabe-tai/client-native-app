@@ -19,7 +19,9 @@ export default function index() {
       <View style={styles.AvatarSection}>
         <AvatarSection />
       </View>
-      <View style={styles.GameDashBoard}></View>
+      <View style={styles.GameDashBoard}>
+        <GameDashBoard />
+      </View>
     </View>
   );
 }

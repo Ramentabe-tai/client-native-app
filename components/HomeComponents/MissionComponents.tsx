@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { CheckBox } from "react-native-elements";
 const MissionComponents = ({ mission }) => {
-   const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  
+
   return (
     <View style={styles.missionContents}>
       <View style={styles.checkboxWrapper}>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    
+
     padding: 10,
   },
   checkboxWrapper: {

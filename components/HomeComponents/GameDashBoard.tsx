@@ -47,11 +47,11 @@ const GameDashBoard = () => {
         </View>
         <View style={styles.missionList}>
           {MissionList.map((mission) => (
-            <MissionComponents mission={mission} />
+            <MissionComponents mission={mission} key={mission.id} />
           ))}
         </View>
       </View>
-      
+
     </View>
   );
 };
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     height: "10%",
     width: "100%",
     alignItems: "center",
-    
+
   },
   missionText: {
     fontSize: 25,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   missionList: {
     width: "100%",
     height: "auto",
-    
+
   },
 });
 
