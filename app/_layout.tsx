@@ -72,9 +72,9 @@ export default function RootLayout() {
             />
             <Stack.Screen name='error' options={{ headerTitle: "Error", headerTitleAlign: "center" }} />
             <Stack.Screen
-            name="LoginPage"
-            options={{ headerTitle: "Login", headerTitleAlign: "center" }}
-          />
+              name="LoginPage"
+              options={{ headerTitle: "Login", headerTitleAlign: "center" }}
+            />
           </Stack>
           <FloatButton
             onOpenSavingAction={handleOpenSavingSheet}
@@ -91,19 +91,20 @@ export default function RootLayout() {
               enablePanDownToClose
               style={styles.bottomSheet}
             >
-              <View style={styles.bottomSheetContent}>
+              <View >
                 <Saving />
               </View>
             </BottomSheet>
             <BottomSheet
               ref={expanseSheetRef}
-              snapPoints={['50%']}
+              snapPoints={['60%']}
               index={-1}
               backdropComponent={renderBackdrop}
               enablePanDownToClose
               style={styles.bottomSheet}
+              keyboardBehavior="extend"
             >
-              <View style={styles.bottomSheetContent}>
+              <View >
                 <Expanse />
               </View>
             </BottomSheet>
@@ -117,11 +118,6 @@ export default function RootLayout() {
 
 const styles = StyleSheet.create({
   bottomSheet: {
-    zIndex: 10, // Ensure the modal is above the floating button
-  },
-  bottomSheetContent: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    zIndex: 10,
   },
 });

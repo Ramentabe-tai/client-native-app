@@ -1,4 +1,3 @@
-import { center } from "@shopify/react-native-skia";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
