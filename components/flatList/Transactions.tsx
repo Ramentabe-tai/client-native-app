@@ -24,7 +24,7 @@ export default function Transactions() {
     const movies = data?.movies || [];
 
     return (
-        <View style={{ height: 300 }}>
+        <View>
             <Text>Transactions:</Text>
             <FlatList
                 data={movies}
@@ -38,12 +38,12 @@ export default function Transactions() {
                 )}
             />
 
-            {/* <Text>Bitcoin Price History:</Text>
-            <FlatList
+            {/* <Text>Bitcoin Price History:</Text> */}
+            {/* <FlatList
                 data={btcData}
                 keyExtractor={(item) => item.timestamp} // Unique key for each entry
                 renderItem={({ item }) => (
-                    <View style={{ padding: 10, backgroundColor: "#fff", margin: 3 }}>
+                    <View style={{ padding: 10, backgroundColor: "#fff", marginHorizontal: 10, marginBottom: 5, borderRadius: 10, }}>
                         <Text>Timestamp: {item.timestamp}</Text>
                         <Text>Price: ${item.price.toFixed(2)}</Text>
                         <Text>Volume (24h): {item.volume_24h.toLocaleString()}</Text>
