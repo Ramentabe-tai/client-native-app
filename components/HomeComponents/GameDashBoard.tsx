@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import MissionComponents from "./MissionComponents";
 
 const GameDashBoard = () => {
-  const [experience, setExperience] = useState(10);
-  const [maxExperience, setMaxExperience] = useState(80);
+  const [experience, setExperience] = useState(800);
+  const [maxExperience, setMaxExperience] = useState(1000);
   const [experienceWidth, setExperienceWidth] = useState(0);
 
   const MissionList = [
@@ -26,6 +26,18 @@ const GameDashBoard = () => {
       content: "3回分の食事が節約",
       incrementValue: 3,
     },
+    {
+      id: 4,
+      name: "カタカナ",
+      content: "ひらがな",
+      incrementValue: 4,
+    },
+    {
+      id: 5,
+      name: "かきくけこ",
+      content: "あいうえお",
+      incrementValue: 4,
+    },
   ];
 
   useEffect(() => {
@@ -37,21 +49,32 @@ const GameDashBoard = () => {
     <View style={styles.GameDashBoardSection}>
       <View style={styles.XPSection}>
         <Text style={styles.level}>level</Text>
-        <View style={[styles.experienceBarContainer, { width: `${maxExperience}%` }]}>
-          <View style={[styles.experienceBarFill, { width: `${experienceWidth}%` }]}></View>
+        <View
+          style={[
+            styles.experienceBarContainer,
+            // { width: `${maxExperience}%` },
+          ]}
+        >
+          <View
+            style={[styles.experienceBarFill, { width: `${experienceWidth}%` }]}
+          ></View>
         </View>
+      </View>
+      <View style={styles.experienceBarFillText}>
+        <Text>
+          {experienceWidth} / {maxExperience}
+        </Text>
       </View>
       <View style={styles.MissionSection}>
         <View style={styles.missionTextSection}>
           <Text style={styles.missionText}>Mission</Text>
         </View>
-        <View style={styles.missionList}>
+        <ScrollView style={styles.missionList}>
           {MissionList.map((mission) => (
             <MissionComponents mission={mission} key={mission.id} />
           ))}
-        </View>
+        </ScrollView>
       </View>
-
     </View>
   );
 };
@@ -65,29 +88,37 @@ const styles = StyleSheet.create({
   XPSection: {
     flexDirection: "row",
     justifyContent: "center",
+    marginTop: 10
   },
   level: {
     fontSize: 15,
+    
   },
   experienceBarContainer: {
-    backgroundColor: "white",
     marginLeft: 10,
-    height: 20,
+    height: 15,
     borderRadius: 50,
-    borderColor: "black",
-    borderWidth: 1
+    backgroundColor: "white",
+    borderColor: "white",
+    borderWidth: 2,
+    width: "80%"
   },
   experienceBarFill: {
     height: "100%",
-    backgroundColor: "black",
+    backgroundColor: "red",
     borderRadius: 50,
+    
+  },
+  experienceBarFillText: {
+    alignItems: "center",
+    fontWeight: 500,
+
   },
   MissionSection: {
     width: "100%",
     height: "80%",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "white",
   },
   missionTextSection: {
     height: "10%",
@@ -101,7 +132,6 @@ const styles = StyleSheet.create({
   missionList: {
     width: "100%",
     height: "auto",
-
   },
 });
 
