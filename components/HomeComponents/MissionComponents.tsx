@@ -25,7 +25,7 @@ const MissionComponents = ({ mission }) => {
           <Text style={styles.missionContent}>{mission.content}</Text>
         </View>
       </View>
-      <View>
+      <View style={styles.missionIncrementValueSection}>
         <Text style={styles.missionIncrementValue}>
           経験値+{mission.incrementValue}
         </Text>
@@ -39,17 +39,15 @@ export default MissionComponents
 const styles = StyleSheet.create({
   missionContents: {
     width: "100%",
-    height: "30%",
+    height: "18%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
     padding: 10,
   },
   checkboxWrapper: {
-    // borderColor: "black",
-    // borderWidth: 1,
+    padding: 10
   },
   missionContentTitle: {
     display: "flex",
@@ -68,10 +66,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "black",
     paddingLeft: 0,
+    marginLeft: -10
   },
   missionContent: {
     fontSize: 15,
     color: "black",
+    paddingLeft: 10
+  },
+  missionIncrementValueSection: {
+    padding: 10
   },
   missionIncrementValue: {
     fontSize: 15,
