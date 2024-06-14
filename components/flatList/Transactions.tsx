@@ -5,41 +5,64 @@ import { getMoviesFromApiAsync } from "@/app/api/example";
 import btcData from "@/app/api/btc.json";
 
 export default function Transactions() {
-    const { isPending, error, data } = useQuery({
-        queryKey: ["movies"],
-        queryFn: getMoviesFromApiAsync,
-    });
+  const { isPending, error, data } = useQuery({
+    queryKey: ["movies"],
+    queryFn: getMoviesFromApiAsync,
+  });
 
-    // Handle loading state
-    if (isPending) {
-        return <Text>Loading analytics...</Text>;
-    }
+  // Handle loading state
+  if (isPending) {
+    return <Text>Loading analytics...</Text>;
+  }
 
-    // Handle errors gracefully
-    if (error) {
-        return <Text>Error fetching analytics: {error.message}</Text>;
-    }
+  // Handle errors gracefully
+  if (error) {
+    return <Text>Error fetching analytics: {error.message}</Text>;
+  }
 
-    // Extract movies from the data
-    const movies = data?.movies || [];
+  // Extract movies from the data
+  const movies = data?.movies || [];
 
-    return (
-        <View>
-            <Text>Transactions:</Text>
-            <FlatList
-                data={movies}
-                keyExtractor={(item) => item.id} // Unique key for each movie
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item }) => (
-                    <View style={{ padding: 10, backgroundColor: "#fff", marginHorizontal: 10, marginBottom: 5, borderRadius: 10, }}>
-                        <Text>Title: {item.title}</Text>
-                        <Text>Release Year: {item.releaseYear}</Text>
-                    </View>
-                )}
-            />
+  return (
+    <View>
+      <Text
+        style={{
+          fontSize: 16,
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: 16,
+        }}
+      >
+        支出の詳細
+      </Text>
+      <FlatList
+        data={movies}
+        keyExtractor={(item) => item.id} // Unique key for each movie
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              padding: 16,
+              borderWidth: 1,
+              borderColor: "#F48E35",
+              backgroundColor: "#fff",
+              marginHorizontal: 16,
+              marginBottom: 8,
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ color: "#000", fontWeight: "bold" }}>
+              Title: {item.title}
+            </Text>
+            <Text style={{ color: "#000" }}>
+              Release Year: {item.releaseYear}
+            </Text>
+          </View>
+        )}
+      />
 
-            {/* <Text>Bitcoin Price History:</Text> */}
-            {/* <FlatList
+      {/* <Text>Bitcoin Price History:</Text> */}
+      {/* <FlatList
                 data={btcData}
                 keyExtractor={(item) => item.timestamp} // Unique key for each entry
                 renderItem={({ item }) => (
@@ -51,6 +74,6 @@ export default function Transactions() {
                     </View>
                 )}
             /> */}
-        </View>
-    );
+    </View>
+  );
 }
