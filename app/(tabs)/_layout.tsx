@@ -13,8 +13,9 @@ import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typesc
 import { Portal, Provider, Modal, Text, Button } from 'react-native-paper';
 import Saving from "@/components/bottomSheets/Saving";
 import Expanse from "@/components/bottomSheets/Expanse";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
+const coinsImg = require('@/assets/images/coins.png')
 const { Navigator } = createMaterialTopTabNavigator();
 
 export const MaterialTopTabs = withLayoutContext<
@@ -27,9 +28,9 @@ export const MaterialTopTabs = withLayoutContext<
 const TabLayout = () => {
 
   const [isBottomSheetOpened, setIsbottomSheetOpened] = useState(false);
-  const [isSavingModalVisible, setIsSavingModalVisible] = useState(false); // State for Saving modal visibility
-  const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false); // State for Expanse modal visibility
 
+  const [isSavingModalVisible, setIsSavingModalVisible] = useState(false);
+  const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false);
 
   const savingSheetRef = useRef<BottomSheetMethods>(null);
   const expanseSheetRef = useRef<BottomSheetMethods>(null);
@@ -121,10 +122,12 @@ const TabLayout = () => {
           </View>
         </BottomSheet>
         <Modal visible={isSavingModalVisible} onDismiss={closeSavingModal} contentContainerStyle={styles.modal}>
+          <Image source={coinsImg} style={styles.image} />
           <Text>Saving Data...</Text>
           <Button onPress={closeSavingModal}>Close</Button>
         </Modal>
         <Modal visible={isExpanseModalVisible} onDismiss={closeExpanseModal} contentContainerStyle={styles.modal}>
+          <Image source={coinsImg} style={styles.image} />
           <Text>Expanse Data...</Text>
           <Button onPress={closeExpanseModal}>Close</Button>
         </Modal>
@@ -142,6 +145,11 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 20,
     borderRadius: 8,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
 });
 
