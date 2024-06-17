@@ -43,15 +43,12 @@ export default function Expanse() {
                 label="Memo"
                 value={text}
                 onChangeText={text => setText(text)}
-                multiline
-                style={{ marginHorizontal: 10 }}
+                style={{ marginHorizontal: 10, width: 'auto' }}
             />
-
             <Button icon="mail" mode="contained" onPress={() => console.log('Pressed')}
                 style={{ marginTop: 20, marginHorizontal: 10 }}>
-                Press me
+                出金
             </Button>
-
         </>
     );
 }
