@@ -7,10 +7,10 @@ import { ParamListBase, TabNavigationState } from "@react-navigation/native";
 import { withLayoutContext } from "expo-router";
 import React, { useRef, useCallback, useState } from "react";
 import FloatButton from "@/components/fab/FloatButton";
-import BottomSheet, { BottomSheetBackdrop, } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
-import { Portal, Provider } from 'react-native-paper';
+import { Portal, Provider, Modal, Text, Button } from 'react-native-paper';
 import Saving from "@/components/bottomSheets/Saving";
 import Expanse from "@/components/bottomSheets/Expanse";
 import { View, StyleSheet } from "react-native";
@@ -26,7 +26,10 @@ export const MaterialTopTabs = withLayoutContext<
 
 const TabLayout = () => {
 
-  const [isOpened, setIsOpened] = useState(false);
+  const [isBottomSheetOpened, setIsbottomSheetOpened] = useState(false);
+  const [isSavingModalVisible, setIsSavingModalVisible] = useState(false); // State for Saving modal visibility
+  const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false); // State for Expanse modal visibility
+
 
   const savingSheetRef = useRef<BottomSheetMethods>(null);
   const expanseSheetRef = useRef<BottomSheetMethods>(null);
@@ -38,6 +41,25 @@ const TabLayout = () => {
   const handleOpenExpanseSheet = useCallback(() => {
     expanseSheetRef.current?.expand();
   }, []);
+
+  const handleSaveAction = useCallback(() => {
+    savingSheetRef.current?.close();
+    setIsSavingModalVisible(true);
+  }, []);
+
+  const handleExpanseSaveAction = useCallback(() => {
+    expanseSheetRef.current?.close();
+    setIsExpanseModalVisible(true);
+  }, []);
+
+  const closeSavingModal = useCallback(() => {
+    setIsSavingModalVisible(false);
+  }, []);
+
+  const closeExpanseModal = useCallback(() => {
+    setIsExpanseModalVisible(false);
+  }, []);
+
 
   const renderBackdrop = useCallback(
     (
@@ -69,8 +91,8 @@ const TabLayout = () => {
       <FloatButton
         onOpenSavingAction={handleOpenSavingSheet}
         onOpenExpanseAction={handleOpenExpanseSheet}
-        setIsOpened={setIsOpened}
-        isOpened={isOpened}
+        setIsOpened={setIsbottomSheetOpened}
+        isOpened={isBottomSheetOpened}
       />
       <Portal>
         <BottomSheet
@@ -82,7 +104,7 @@ const TabLayout = () => {
           style={styles.bottomSheet}
         >
           <View >
-            <Saving />
+            <Saving onSavingSubmitted={handleSaveAction} />
           </View>
         </BottomSheet>
         <BottomSheet
@@ -95,9 +117,17 @@ const TabLayout = () => {
           keyboardBehavior="extend"
         >
           <View >
-            <Expanse />
+            <Expanse onExpanseSubmitted={handleExpanseSaveAction} />
           </View>
         </BottomSheet>
+        <Modal visible={isSavingModalVisible} onDismiss={closeSavingModal} contentContainerStyle={styles.modal}>
+          <Text>Saving Data...</Text>
+          <Button onPress={closeSavingModal}>Close</Button>
+        </Modal>
+        <Modal visible={isExpanseModalVisible} onDismiss={closeExpanseModal} contentContainerStyle={styles.modal}>
+          <Text>Expanse Data...</Text>
+          <Button onPress={closeExpanseModal}>Close</Button>
+        </Modal>
       </Portal>
     </Provider>
   );
@@ -106,6 +136,12 @@ const TabLayout = () => {
 const styles = StyleSheet.create({
   bottomSheet: {
     zIndex: 10,
+  },
+  modal: {
+    backgroundColor: 'white',
+    padding: 20,
+    margin: 20,
+    borderRadius: 8,
   },
 });
 

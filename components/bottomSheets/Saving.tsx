@@ -3,9 +3,12 @@ import { Text, View, StyleSheet } from 'react-native'
 import { Input, Icon } from '@rneui/themed';
 import { Chip, Button } from 'react-native-paper';
 
+interface SavingProps {
+    onSavingSubmitted: () => void
 
+}
 
-export default function Saving() {
+export default function Saving({ onSavingSubmitted }: SavingProps) {
     return (
         <>
             <View>
@@ -27,7 +30,7 @@ export default function Saving() {
                 <Chip onPress={() => console.log('10000 Pressed')} style={styles.chip}>10,000</Chip>
             </View>
 
-            <Button icon="mail" mode="contained" onPress={() => console.log('Pressed')}
+            <Button icon="mail" mode="contained" onPress={onSavingSubmitted}
                 style={{ marginTop: 20, marginHorizontal: 10 }}>
                 入金
             </Button>
@@ -46,4 +49,3 @@ const styles = StyleSheet.create({
         marginHorizontal: 3,
     },
 });
-
