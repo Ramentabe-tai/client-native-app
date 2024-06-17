@@ -20,11 +20,10 @@ export default function index() {
       colors={['#FCFF80', '#5AD1B7']} // 시작 색상과 끝 색상
       style={styles.background}
     >
-      <View style={styles.HomeSection}>
+    <View style={styles.HomeSection}>
       <View style={styles.AvatarSection}>
         <AvatarSection />
       </View>
-      <View style={styles.GameDashBoard}></View>
       <Link href="/LoginPage">Login</Link>
       <View style={styles.GameDashBoard}>
         <GameDashBoard />
@@ -35,21 +34,20 @@ export default function index() {
 }
 
 const styles = StyleSheet.create({
-   background: {
+  background: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   HomeSection: {
     width: "100%",
     height: "100%",
     flexDirection: "column",
-    
   },
   AvatarSection: {
     height: "45%",
   },
   GameDashBoard: {
     height: "55%",
-  }
+  },
 });
