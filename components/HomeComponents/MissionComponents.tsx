@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 import { CheckBox } from "@rneui/themed";
-const MissionComponents = ({ mission }: { mission: any }) => { // fix types later
+const MissionComponents = ({ mission }: { mission: any }) => {
+  // fix types later
   const [isChecked, setIsChecked] = useState(false);
-
 
   return (
     <View style={styles.missionContents}>
@@ -32,52 +32,50 @@ const MissionComponents = ({ mission }: { mission: any }) => { // fix types late
       </View>
     </View>
   );
-}
+};
 
-export default MissionComponents
+export default MissionComponents;
 
 const styles = StyleSheet.create({
   missionContents: {
     width: "100%",
-    height: "18%",
+    height: 80,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    marginTop: 8,
   },
   checkboxWrapper: {
-    padding: 10
+    marginLeft: 8,
   },
   missionContentTitle: {
     display: "flex",
     flexDirection: "row",
   },
   checkboxContainer: {
+    width: 12,
+    height: 24,
     margin: 0,
     padding: 0,
     borderWidth: 0,
     backgroundColor: "transparent",
   },
-  textStyle: {
-    fontSize: 15,
-  },
+  textStyle: {},
   missionName: {
-    fontSize: 20,
+    fontSize: 16,
     color: "black",
-    paddingLeft: 0,
-    marginLeft: -10
   },
   missionContent: {
-    fontSize: 15,
+    fontSize: 12,
     color: "black",
-    paddingLeft: 10
+    marginLeft: 16,
   },
   missionIncrementValueSection: {
-    padding: 10
+    marginRight: 8,
   },
   missionIncrementValue: {
-    fontSize: 15,
+    fontSize: 16,
     color: "black",
   },
 });

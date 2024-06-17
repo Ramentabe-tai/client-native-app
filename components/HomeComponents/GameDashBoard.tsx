@@ -88,50 +88,47 @@ const styles = StyleSheet.create({
   XPSection: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 10
+    alignItems: "center",
+    marginTop: 16,
   },
   level: {
-    fontSize: 15,
-    
+    fontSize: 16,
   },
   experienceBarContainer: {
-    marginLeft: 10,
-    height: 15,
+    marginLeft: 8,
+    height: 16,
     borderRadius: 50,
     backgroundColor: "white",
     borderColor: "white",
     borderWidth: 2,
-    width: "80%"
+    width: "80%",
   },
   experienceBarFill: {
     height: "100%",
     backgroundColor: "red",
     borderRadius: 50,
-    
   },
   experienceBarFillText: {
     alignItems: "center",
-    fontWeight: 500,
-
+    // fontWeight: "bold",
   },
   MissionSection: {
     width: "100%",
     height: "80%",
     alignItems: "center",
     justifyContent: "space-between",
+    marginTop: 16,
   },
   missionTextSection: {
     height: "10%",
     width: "100%",
     alignItems: "center",
-
   },
   missionText: {
-    fontSize: 25,
+    fontSize: 24,
   },
   missionList: {
     width: "100%",
     height: "auto",
   },
 });
-
