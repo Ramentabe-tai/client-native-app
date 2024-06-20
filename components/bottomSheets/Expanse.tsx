@@ -4,7 +4,10 @@ import { Input, Icon } from '@rneui/themed';
 import { Chip, TextInput, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Expanse() {
+interface ExpanseProps {
+    onExpanseSubmitted: () => void
+}
+export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
     const [text, setText] = useState("");
     return (
         <>
@@ -43,15 +46,12 @@ export default function Expanse() {
                 label="Memo"
                 value={text}
                 onChangeText={text => setText(text)}
-                multiline
-                style={{ marginHorizontal: 10 }}
+                style={{ marginHorizontal: 10, width: 'auto' }}
             />
-
-            <Button icon="mail" mode="contained" onPress={() => console.log('Pressed')}
+            <Button icon="mail" mode="contained" onPress={onExpanseSubmitted}
                 style={{ marginTop: 20, marginHorizontal: 10 }}>
-                Press me
+                出金
             </Button>
-
         </>
     );
 }

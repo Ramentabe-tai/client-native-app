@@ -1,47 +1,53 @@
-import React, { useState } from 'react'
-import { Pressable, Text, View, Modal, StyleSheet } from "react-native";
 
-export default function Saving() {
-    const [openModal, setOpenModal] = useState(false)
+import React from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import { Input, Icon } from '@rneui/themed';
+import { Chip, Button } from 'react-native-paper';
+
+interface SavingProps {
+    onSavingSubmitted: () => void
+
+}
+
+export default function Saving({ onSavingSubmitted }: SavingProps) {
     return (
-      <View>
-        <Pressable onPress={() => setOpenModal(true)}>
-          <Text>入金</Text>
-        </Pressable>
-        {openModal && (
-          <Modal
-            animationType="fade"
-            transparent={true}
-            onRequestClose={() => setOpenModal(false)}
-          >
-            <View style={styles.modalSection}>
-                <View style={styles.coinImg}></View>            
-                <Text>모달 내용</Text>
-                <Pressable onPress={() => setOpenModal(false)}>
-                  <Text>確認</Text>
-                </Pressable>
-              
+        <>
+            <View>
+                <Text>金額</Text>
+                <Input
+                    containerStyle={{ width: 'auto' }}
+                    disabledInputStyle={{ backgroundColor: '#ddd' }}
+                    inputContainerStyle={{}}
+                    inputStyle={{ textAlign: 'right', padding: 5 }}
+                    rightIcon={<Icon name="close" size={20} />}
+                    rightIconContainerStyle={{}}
+                    placeholder="¥ 10,000 "
+                />
             </View>
-          </Modal>
-        )}
-      </View>
-    );
+            <View style={styles.chipContainer}>
+                <Chip onPress={() => console.log('3000 Pressed')} style={styles.chip}>3,000</Chip>
+                <Chip onPress={() => console.log('5000 Pressed')} style={styles.chip}>5,000</Chip>
+                <Chip onPress={() => console.log('7000 Pressed')} style={styles.chip}>7,000</Chip>
+                <Chip onPress={() => console.log('10000 Pressed')} style={styles.chip}>10,000</Chip>
+            </View>
+
+            <Button icon="mail" mode="contained" onPress={onSavingSubmitted}
+                style={{ marginTop: 20, marginHorizontal: 10 }}>
+                入金
+            </Button>
+        </>
+    )
 }
 
 const styles = StyleSheet.create({
-  modalSection: {
-    width: 300,
-    height: 300,
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    transform: [{ translateX: 50}, { translateY: 100 }],
-  },
-  coinImg: {
-    width: 10,
-    height: 10,
-    backgroundColor: "black",
-  },
+    chipContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        marginBottom: 20,
+        alignItems: 'center',
+    },
+    chip: {
+        marginHorizontal: 3,
+    },
 });
+
