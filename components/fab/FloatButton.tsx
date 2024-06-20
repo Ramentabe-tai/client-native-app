@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
-import { Octicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { Octicons, MaterialIcons, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const DURATION = 400;
@@ -50,7 +50,7 @@ export default function FloatButton({ onOpenSavingAction, onOpenExpanseAction, s
             <Pressable
                 onPress={handlePress}
                 style={({ pressed }) => pressed ? [styles.plusButton, { transform: [{ scale: 0.9 }] }] : [styles.plusButton]}>
-                <Octicons name="plus" size={36} color="white" />
+                <FontAwesome6 name="yen-sign" size={36} color="white" />
             </Pressable>
             <AnimatedPressable
                 onPress={() => {
