@@ -1,13 +1,12 @@
 import React from "react";
 import { View, Text, FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { getMoviesFromApiAsync } from "@/app/api/example";
-import btcData from "@/app/api/btc.json";
+import { getTransactions } from "@/app/api/analytics";
 
 export default function Transactions() {
   const { isPending, error, data } = useQuery({
     queryKey: ["movies"],
-    queryFn: getMoviesFromApiAsync,
+    queryFn: getTransactions,
   });
 
   // Handle loading state
@@ -15,7 +14,6 @@ export default function Transactions() {
     return <Text>Loading analytics...</Text>;
   }
 
-  // Handle errors gracefully
   if (error) {
     return <Text>Error fetching analytics: {error.message}</Text>;
   }
@@ -60,20 +58,6 @@ export default function Transactions() {
           </View>
         )}
       />
-
-      {/* <Text>Bitcoin Price History:</Text> */}
-      {/* <FlatList
-                data={btcData}
-                keyExtractor={(item) => item.timestamp} // Unique key for each entry
-                renderItem={({ item }) => (
-                    <View style={{ padding: 10, backgroundColor: "#fff", marginHorizontal: 10, marginBottom: 5, borderRadius: 10, }}>
-                        <Text>Timestamp: {item.timestamp}</Text>
-                        <Text>Price: ${item.price.toFixed(2)}</Text>
-                        <Text>Volume (24h): {item.volume_24h.toLocaleString()}</Text>
-                        <Text>Market Cap: ${item.market_cap.toLocaleString()}</Text>
-                    </View>
-                )}
-            /> */}
     </View>
   );
 }

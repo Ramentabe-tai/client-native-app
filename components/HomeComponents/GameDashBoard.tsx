@@ -1,44 +1,14 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import MissionComponents from "./MissionComponents";
+import { getMissions, getExprience } from "@/app/api/index"
 
 const GameDashBoard = () => {
-  const [experience, setExperience] = useState(800);
-  const [maxExperience, setMaxExperience] = useState(1000);
+  const [experience, setExperience] = useState(getExprience());
+  const [maxExperience, setMaxExperience] = useState(getExprience());
   const [experienceWidth, setExperienceWidth] = useState(0);
 
-  const MissionList = [
-    {
-      id: 1,
-      name: "水を入れる",
-      content: "水筒に水を入れる。 約200円節約",
-      incrementValue: 1,
-    },
-    {
-      id: 2,
-      name: "冷房の温度を1度上げる",
-      content: "約500円節約",
-      incrementValue: 2,
-    },
-    {
-      id: 3,
-      name: "晩ご飯はカレーを作りましょう",
-      content: "3回分の食事が節約",
-      incrementValue: 3,
-    },
-    {
-      id: 4,
-      name: "カタカナ",
-      content: "ひらがな",
-      incrementValue: 4,
-    },
-    {
-      id: 5,
-      name: "かきくけこ",
-      content: "あいうえお",
-      incrementValue: 4,
-    },
-  ];
+  const missions = getMissions()
 
   useEffect(() => {
     const experienceWidthPercentage = (experience / maxExperience) * 100;
@@ -52,7 +22,7 @@ const GameDashBoard = () => {
         <View
           style={[
             styles.experienceBarContainer,
-            // { width: `${maxExperience}%` },
+
           ]}
         >
           <View
@@ -70,7 +40,7 @@ const GameDashBoard = () => {
           <Text style={styles.missionText}>Mission</Text>
         </View>
         <ScrollView style={styles.missionList}>
-          {MissionList.map((mission) => (
+          {missions.map((mission) => (
             <MissionComponents mission={mission} key={mission.id} />
           ))}
         </ScrollView>

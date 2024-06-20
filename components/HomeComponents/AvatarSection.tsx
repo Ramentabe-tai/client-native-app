@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-
+import { getSavingBalance, getCheckingBalance } from "@/app/api/analytics";
 const AvatarSection = () => {
-  const [balance, setBalance] = useState<number>(10000000);
-  const [depositedAmount, setDepositedAmount] = useState(5000)
+  const [checkingBalance, setCheckingBalance] = useState<number>(getCheckingBalance());
+  const [savingBalance, setSavingBalance] = useState<number>(getSavingBalance());
   const formatBalance = (balance: number) => {
     return new Intl.NumberFormat("en-US").format(balance);
   };
@@ -19,7 +19,7 @@ const AvatarSection = () => {
           <Text style={styles.DepositedAmountText}>貯金額</Text>
           <View style={styles.DepositedAmountInner}>
             <Text style={styles.DepositedAmount}>
-              ¥{formatBalance(depositedAmount)}
+              ¥{formatBalance(savingBalance)}
             </Text>
           </View>
         </View>
@@ -27,7 +27,7 @@ const AvatarSection = () => {
         <View style={styles.balanceSection}>
           <Text style={styles.balanceText}>口座残高</Text>
           <View style={styles.balanceInner}>
-            <Text style={styles.balance}>¥{formatBalance(balance)}</Text>
+            <Text style={styles.balance}>¥{formatBalance(checkingBalance)}</Text>
           </View>
         </View>
       </View>
