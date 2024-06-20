@@ -19,15 +19,15 @@ const MissionComponents = ({ mission }: { mission: any }) => {
             checkedIcon="check-square"
             uncheckedIcon="square-o"
           />
-          <Text style={styles.missionName}>{mission.name}</Text>
+          <Text style={styles.missionName}>{mission.title}</Text>
         </View>
         <View>
-          <Text style={styles.missionContent}>{mission.content}</Text>
+          <Text style={styles.missionContent}>{mission.desc}</Text>
         </View>
       </View>
       <View style={styles.missionIncrementValueSection}>
         <Text style={styles.missionIncrementValue}>
-          経験値+{mission.incrementValue}
+          {mission.exp} Exps
         </Text>
       </View>
     </View>
