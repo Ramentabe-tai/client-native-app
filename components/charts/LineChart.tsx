@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import { getChartsData, getSavingBalance, getSpendings } from "@/app/api/analytics";
 
-const data = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 },
-];
+const chartsData = getChartsData()
+const savingBalance = getSavingBalance()
+const spendings = getSpendings()
+
+const formatBalance = (balance: number) => {
+  return new Intl.NumberFormat("en-US").format(balance);
+};
 
 export default function LineChart() {
   return (
@@ -15,11 +17,11 @@ export default function LineChart() {
       <View style={styles.Wrapper}>
         <View style={styles.innerWrapper}>
           <Text style={styles.Headline}>貯金額</Text>
-          <Text style={styles.Value}>¥1,000,000</Text>
+          <Text style={styles.Value}>¥{formatBalance(savingBalance)}</Text>
         </View>
         <View style={styles.innerWrapper}>
           <Text style={styles.Headline}>使用金額(月)</Text>
-          <Text style={styles.Value}>¥50,000</Text>
+          <Text style={styles.Value}>¥{formatBalance(spendings)}</Text>
         </View>
       </View>
       <View style={styles.container}>
@@ -29,9 +31,9 @@ export default function LineChart() {
           domainPadding={{ x: 32 }}
         >
           <VictoryBar
-            data={data}
-            x="quarter"
-            y="earnings"
+            data={chartsData}
+            x="month"
+            y="spendings"
             alignment="middle"
             style={{ data: { fill: "#F48E35" } }}
           />
