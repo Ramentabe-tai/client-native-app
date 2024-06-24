@@ -33,7 +33,7 @@ export default function Saving({ onSavingSubmitted }: SavingProps) {
             </View>
 
             <Button icon="mail" mode="contained" onPress={onSavingSubmitted}
-                style={{ marginTop: 20, marginHorizontal: 10 }}>
+                style={{ marginTop: 20, marginHorizontal: 10, backgroundColor: "#F48E35" }}>
                 入金
             </Button>
         </>

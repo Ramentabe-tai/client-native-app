@@ -53,7 +53,7 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
                 style={{ marginHorizontal: 10, width: 'auto' }}
             />
             <Button icon="mail" mode="contained" onPress={onExpanseSubmitted}
-                style={{ marginTop: 16, marginHorizontal: 10 }}>
+                style={{ marginTop: 16, marginHorizontal: 10, backgroundColor: "#F48E35"}}>
                 出金
             </Button>
         </>
