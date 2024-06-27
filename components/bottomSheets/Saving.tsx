@@ -25,14 +25,14 @@ export default function Saving({ onSavingSubmitted }: SavingProps) {
                 />
             </View>
             <View style={styles.chipContainer}>
-                <Chip onPress={() => console.log('3000 Pressed')} style={styles.chip}>3,000</Chip>
-                <Chip onPress={() => console.log('5000 Pressed')} style={styles.chip}>5,000</Chip>
-                <Chip onPress={() => console.log('7000 Pressed')} style={styles.chip}>7,000</Chip>
-                <Chip onPress={() => console.log('10000 Pressed')} style={styles.chip}>10,000</Chip>
+                <Chip onPress={() => console.log('3000 Pressed')} mode='outlined' style={styles.chip}>3,000</Chip>
+                <Chip onPress={() => console.log('5000 Pressed')} mode='outlined' style={styles.chip}>5,000</Chip>
+                <Chip onPress={() => console.log('7000 Pressed')} mode='outlined' style={styles.chip}>7,000</Chip>
+                <Chip onPress={() => console.log('10000 Pressed')} mode='outlined' style={styles.chip}>10,000</Chip>
             </View>
 
-            <Button icon="mail" mode="contained" onPress={onSavingSubmitted}
-                style={{ marginTop: 20, marginHorizontal: 10 }}>
+            <Button mode="contained" onPress={onSavingSubmitted}
+                style={{ marginTop: 20, marginHorizontal: 10, backgroundColor: '#F48E35' }}>
                 入金
             </Button>
         </>
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     },
     chip: {
         marginHorizontal: 3,
+        borderColor: '#F48E35'
     },
 });
 

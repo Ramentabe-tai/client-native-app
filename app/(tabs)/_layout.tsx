@@ -16,6 +16,7 @@ import Expanse from "@/components/bottomSheets/Expanse";
 import { View, StyleSheet, Image } from "react-native";
 
 const coinsImg = require('@/assets/images/coins.png')
+const expenseImg = require('@/assets/images/expense.png')
 const { Navigator } = createMaterialTopTabNavigator();
 
 export const MaterialTopTabs = withLayoutContext<
@@ -86,6 +87,9 @@ const TabLayout = () => {
         screenOptions={{
           tabBarActiveTintColor: "#131620",
           tabBarPressColor: "transparent",
+          tabBarIndicatorStyle: {
+            backgroundColor: "#F48E35", // Replace with your desired color
+          },
         }}
       ></MaterialTopTabs>
 
@@ -110,7 +114,7 @@ const TabLayout = () => {
         </BottomSheet>
         <BottomSheet
           ref={expanseSheetRef}
-          snapPoints={['60%']}
+          snapPoints={['65%']}
           index={-1}
           backdropComponent={renderBackdrop}
           enablePanDownToClose
@@ -122,14 +126,18 @@ const TabLayout = () => {
           </View>
         </BottomSheet>
         <Modal visible={isSavingModalVisible} onDismiss={closeSavingModal} contentContainerStyle={styles.modal}>
-          <Image source={coinsImg} style={styles.image} />
-          <Text>Saving Data...</Text>
-          <Button onPress={closeSavingModal}>Close</Button>
+          <View style={styles.underline}>
+            <Image source={coinsImg} style={styles.image} />
+            <Text style={styles.text}>￥10,000円入金されました!</Text>
+          </View>
+          <Button onPress={closeSavingModal} style={styles.button} mode="contained">確認</Button>
         </Modal>
         <Modal visible={isExpanseModalVisible} onDismiss={closeExpanseModal} contentContainerStyle={styles.modal}>
-          <Image source={coinsImg} style={styles.image} />
-          <Text>Expanse Data...</Text>
-          <Button onPress={closeExpanseModal}>Close</Button>
+          <View style={styles.underline}>
+            <Image source={expenseImg} style={styles.image} />
+            <Text style={styles.text}>￥10,000円出金されました!</Text>
+          </View>
+          <Button onPress={closeExpanseModal} style={styles.button} mode="contained">確認</Button>
         </Modal>
       </Portal>
     </Provider>
@@ -150,6 +158,20 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginBottom: 20,
+  },
+  button: {
+    marginTop: 40,
+    backgroundColor: '#F48E35',
+  },
+  text: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  underline: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#F48E35',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

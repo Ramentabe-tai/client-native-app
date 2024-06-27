@@ -17,9 +17,9 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
             <View>
                 <Text style={styles.moneyHeadline}>金額</Text>
                 <Input
-                    containerStyle={{ width: 'auto', height: "16%"}}
+                    containerStyle={{ width: 'auto', height: "16%" }}
                     disabledInputStyle={{ backgroundColor: '#ddd' }}
-                    inputContainerStyle={{ borderBottomWidth: 1, borderColor: "#F48E35", width: "auto"}}
+                    inputContainerStyle={{ borderBottomWidth: 1, borderColor: "#F48E35", width: "auto" }}
                     inputStyle={{ textAlign: 'right', padding: 5 }}
                     rightIcon={<Icon name="close" size={20} />}
                     rightIconContainerStyle={{}}
@@ -34,7 +34,7 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
                 <Chip onPress={() => console.log('7000 Pressed')} style={styles.chip}>7,000</Chip>
                 <Chip onPress={() => console.log('10000 Pressed')} style={styles.chip}>10,000</Chip>
             </View>
-            <Text style ={styles.categoryHeadline}>カテゴリ</Text>
+            <Text style={styles.categoryHeadline}>カテゴリ</Text>
             <View style={styles.iconChipContainer}>
                 <Chip icon={() => (<FontAwesome name="shopping-bag" size={20} color="red" />)} style={styles.iconChip}>買い物</Chip>
                 <Chip icon={() => (<Ionicons name="shirt" size={20} color="blue" />)} style={styles.iconChip}>衣類</Chip>
@@ -47,13 +47,14 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
             </View>
             <Text style={styles.memoHeadline}>Memo</Text>
             <TextInput
-                label="Memo"
+                mode='outlined'
                 value={text}
                 onChangeText={text => setText(text)}
-                style={{ marginHorizontal: 10, width: 'auto' }}
+                activeOutlineColor='#F48E35'
+                style={{ marginHorizontal: 10, width: 'auto', backgroundColor: "#FFF" }}
             />
-            <Button icon="mail" mode="contained" onPress={onExpanseSubmitted}
-                style={{ marginTop: 16, marginHorizontal: 10 }}>
+            <Button mode="contained" onPress={onExpanseSubmitted}
+                style={{ marginTop: 16, marginHorizontal: 10, backgroundColor: '#F48E35' }}>
                 出金
             </Button>
         </>
