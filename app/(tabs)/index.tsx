@@ -1,16 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import AvatarSection from "@/components/HomeComponents/AvatarSection";
-import { Link } from "expo-router";
-
 import GameDashBoard from "@/components/HomeComponents/GameDashBoard";
 import { LinearGradient } from "expo-linear-gradient";
 
-type Movie = {
-  id: string;
-  title: string;
-  releaseYear: string;
-};
+
 
 export default function index() {
   return (

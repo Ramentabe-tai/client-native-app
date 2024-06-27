@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { getSavingBalance, getCheckingBalance } from "@/app/api/analytics";
+import Scene from '@/components/3d/Scene'
 const AvatarSection = () => {
   const [checkingBalance, setCheckingBalance] = useState<number>(getCheckingBalance());
   const [savingBalance, setSavingBalance] = useState<number>(getSavingBalance());
@@ -11,7 +12,9 @@ const AvatarSection = () => {
   return (
     <View style={styles.AvatarBalanceSection}>
       <View style={styles.AvatarSection}>
-        <View style={styles.Avatar}></View>
+        <View style={styles.Avatar}>
+          <Scene></Scene>
+        </View>
       </View>
 
       <View style={styles.infoContainer}>
@@ -48,10 +51,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   Avatar: {
+    marginTop: 20,
     width: 200,
-    height: 200,
-    backgroundColor: "black",
-    borderRadius: 100,
+    height: 800,
   },
   infoContainer: {
     display: "flex",

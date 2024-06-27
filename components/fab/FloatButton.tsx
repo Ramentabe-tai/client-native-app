@@ -49,7 +49,7 @@ export default function FloatButton({ onOpenSavingAction, onOpenExpanseAction, s
         <View style={styles.container}>
             <Pressable
                 onPress={handlePress}
-                style={({ pressed }) => pressed ? [styles.plusButton, { transform: [{ scale: 0.9 }] }] : [styles.plusButton]}>
+                style={({ pressed }) => pressed ? [styles.yenButton, { transform: [{ scale: 0.9 }] }] : [styles.yenButton]}>
                 <FontAwesome6 name="yen-sign" size={36} color="white" />
             </Pressable>
             <AnimatedPressable
@@ -57,18 +57,18 @@ export default function FloatButton({ onOpenSavingAction, onOpenExpanseAction, s
                     setIsOpened(false);
                     onOpenSavingAction();
                 }} // Open the saving action when chart button is pressed
-                style={[styles.chartButton, rChartAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
+                style={[styles.plusButton, rChartAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
             >
-                <MaterialIcons name="add-chart" size={32} color="white" />
+                <FontAwesome name="plus" size={24} color="white" />
             </AnimatedPressable>
             <AnimatedPressable
                 onPress={() => {
                     setIsOpened(false);
                     onOpenExpanseAction();
                 }} // Open the expanse action when the second button is pressed
-                style={[styles.secondButton, rSecondButtonAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
+                style={[styles.minusButton, rSecondButtonAnimateStyles, { zIndex: isOpened ? 1 : -1 }]}
             >
-                <FontAwesome name="bar-chart" size={28} color="white" />
+                <FontAwesome name="minus" size={24} color="white" />
             </AnimatedPressable>
         </View>
     );
@@ -81,35 +81,41 @@ const styles = StyleSheet.create({
         right: 20,
         zIndex: 1, // Ensure container has a zIndex
     },
-    plusButton: {
+    yenButton: {
         width: 60,
         height: 60,
-        backgroundColor: '#777',
+        backgroundColor: '#F48E35',
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 2,
+        borderWidth: 1,
+        borderColor: 'white'
     },
-    chartButton: {
+    plusButton: {
         width: 48,
         height: 48,
-        backgroundColor: '#777',
+        backgroundColor: '#F48E35',
         borderRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
         bottom: 10,
         right: 6,
+        borderWidth: 1,
+        borderColor: 'white'
     },
-    secondButton: {
+    minusButton: {
         width: 48,
         height: 48,
-        backgroundColor: '#777',
+        backgroundColor: '#F48E35',
         borderRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
         bottom: 10,
         right: 6,
+        borderWidth: 1,
+        borderColor: 'white'
     },
 });
