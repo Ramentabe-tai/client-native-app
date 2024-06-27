@@ -45,13 +45,19 @@ export default function LineChart() {
 
 const styles = StyleSheet.create({
   Wrapper: {
+    display: 'flex',
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     marginTop: 16,
+
   },
   innerWrapper: {
-    width: "50%",
+    backgroundColor: '#FFFF',
+    paddingHorizontal: 40,
+    paddingVertical: 5,
+    borderRadius: 10
+
   },
   Headline: {
     fontSize: 16,
@@ -65,7 +71,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#fff",
-    height: 320,
+    height: 300,
     marginVertical: 16,
     marginHorizontal: 16,
     borderRadius: 10,

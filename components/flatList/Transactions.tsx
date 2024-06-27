@@ -22,7 +22,7 @@ export default function Transactions() {
   const movies = data?.movies || [];
 
   return (
-    <View>
+    <View style={{ height: '35%' }}>
       <Text
         style={{
           fontSize: 16,
@@ -37,12 +37,11 @@ export default function Transactions() {
         data={movies}
         keyExtractor={(item) => item.id} // Unique key for each movie
         showsVerticalScrollIndicator={false}
+
         renderItem={({ item }) => (
           <View
             style={{
               padding: 16,
-              borderWidth: 1,
-              borderColor: "#F48E35",
               backgroundColor: "#fff",
               marginHorizontal: 16,
               marginBottom: 8,
