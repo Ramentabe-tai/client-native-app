@@ -1,9 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { CheckBox } from "@rneui/themed";
-const MissionComponents = ({ mission }: { mission: any }) => {
-  // fix types later
-  const [isChecked, setIsChecked] = useState(false);
+
+const MissionComponents = ({ mission, onUpdateMissionStatus }: { mission: any, onUpdateMissionStatus: (missionId: number) => void }) => {
+  const [isChecked, setIsChecked] = useState(mission.isCompleted);
+
+  const handleMissionCompletion = () => {
+
+    setIsChecked(mission.isCompleted);
+    onUpdateMissionStatus(mission.missionId);
+
+  };
+
 
   return (
     <View style={styles.missionContents}>
@@ -11,23 +19,24 @@ const MissionComponents = ({ mission }: { mission: any }) => {
         <View style={styles.missionContentTitle}>
           <CheckBox
             checked={isChecked}
-            onPress={() => setIsChecked(!isChecked)}
+            onPress={handleMissionCompletion}
             checkedColor="black"
             uncheckedColor="black"
             containerStyle={styles.checkboxContainer}
-            textStyle={styles.textStyle}
             checkedIcon="check-square"
             uncheckedIcon="square-o"
           />
-          <Text style={styles.missionName}>{mission.title}</Text>
+          <Text style={[styles.missionName, isChecked && styles.completedMission]}>
+            {mission.missionTitle}
+          </Text>
         </View>
         <View>
-          <Text style={styles.missionContent}>{mission.desc}</Text>
+          <Text style={styles.missionContent}>{mission.missionDescription}</Text>
         </View>
       </View>
       <View style={styles.missionIncrementValueSection}>
         <Text style={styles.missionIncrementValue}>
-          {mission.exp} Exps
+          {mission.expPoint} Exps
         </Text>
       </View>
     </View>
@@ -38,13 +47,16 @@ export default MissionComponents;
 
 const styles = StyleSheet.create({
   missionContents: {
-    width: "100%",
     height: 80,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 8,
+    marginTop: 2,
+    backgroundColor: '#7777',
+    marginHorizontal: 5,
+    borderRadius: 10,
+
   },
   checkboxWrapper: {
     marginLeft: 8,
@@ -52,6 +64,7 @@ const styles = StyleSheet.create({
   missionContentTitle: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
   },
   checkboxContainer: {
     width: 12,
@@ -61,15 +74,18 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: "transparent",
   },
-  textStyle: {},
   missionName: {
     fontSize: 16,
     color: "black",
   },
+  completedMission: {
+    textDecorationLine: "line-through",
+  },
   missionContent: {
     fontSize: 12,
     color: "black",
-    marginLeft: 16,
+    marginLeft: 12,
+    width: 250
   },
   missionIncrementValueSection: {
     marginRight: 8,

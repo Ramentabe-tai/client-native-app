@@ -1,27 +1,31 @@
-export function getMissions() {
-  const response = [
-    {
-      id: 1,
-      title: "mission Title lorem ipsum ",
-      desc: "mission descriptions",
-      exp: 1000,
-    },
-    {
-      id: 2,
-      title: "mission Title lorem ipsum ",
-      desc: "mission descriptions",
-      exp: 1000,
-    },
-    {
-      id: 3,
-      title: "mission Title lorem ipsum ",
-      desc: "mission descriptions",
-      exp: 1000,
-    },
-  ];
-  return response;
+// Function to fetch missions data
+export async function fetchMissions() {
+  const url = `http://15.168.108.6:8080/api/member/1/missions`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to fetch missions");
+    }
+    const missions = await response.json();
+    return missions;
+  } catch (error) {
+    console.error("Error fetching missions:", error);
+    return [];
+  }
 }
-export function getExprience() {
-  const response = { exp: 10000 };
-  return response.exp;
+
+// Function to fetch experience data
+export async function fetchExperience() {
+  const url = `http://15.168.108.6:8080/api/member/1/exp`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to fetch experience");
+    }
+    const experience = await response.json();
+    return experience.exp;
+  } catch (error) {
+    console.error("Error fetching experience:", error);
+    return 0;
+  }
 }

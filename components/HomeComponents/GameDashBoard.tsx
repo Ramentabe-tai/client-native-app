@@ -1,47 +1,96 @@
+import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import MissionComponents from "./MissionComponents";
-import { getMissions, getExprience } from "@/app/api/index"
+import { useQuery } from "@tanstack/react-query";
+import MissionComponents from "./MissionComponents"; // Import your MissionComponents component
+
+// API fetch functions
+const getExperience = async () => {
+  const response = await fetch("http://15.168.108.6:8080/api/member/1/exp");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  const data = await response.json();
+  return data.exp;
+};
+
+const getMissions = async () => {
+  const response = await fetch("http://15.168.108.6:8080/api/member/1/missions");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  const data = await response.json();
+  return data.missions;
+};
 
 const GameDashBoard = () => {
-  const [experience, setExperience] = useState(getExprience());
-  const [maxExperience, setMaxExperience] = useState(getExprience());
-  const [experienceWidth, setExperienceWidth] = useState(0);
+  const { isLoading: expLoading, error: expError, data: experience } = useQuery({
+    queryKey: ["experience"],
+    queryFn: getExperience,
+  });
 
-  const missions = getMissions()
+  const { isLoading: missionsLoading, error: missionsError, data: missions, refetch: refetchMissions } = useQuery({
+    queryKey: ["missions"],
+    queryFn: getMissions,
+  });
 
-  useEffect(() => {
-    const experienceWidthPercentage = (experience / maxExperience) * 100;
-    setExperienceWidth(experienceWidthPercentage);
-  }, [experience]);
+  const maxExperience = 1000;
+  const experienceWidth = experience ? (experience / maxExperience) * 100 : 0;
+
+  // Function to handle mission status update
+  const handleUpdateMissionStatus = async (missionId: number) => {
+    try {
+      const response = await fetch(`http://15.168.108.6:8080/api/member/1/mission/${missionId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update mission status");
+      }
+
+      const data = await response.json();
+      console.log(data); // Log the response data
+
+      // Refetch missions after successful update
+      refetchMissions();
+    } catch (error) {
+      console.log("Error updating mission status:", error);
+    }
+  };
+
+  if (expLoading || missionsLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (expError || missionsError) {
+    return <Text>Error fetching data</Text>;
+  }
 
   return (
     <View style={styles.GameDashBoardSection}>
       <View style={styles.XPSection}>
-        <Text style={styles.level}>level</Text>
-        <View
-          style={[
-            styles.experienceBarContainer,
-
-          ]}
-        >
-          <View
-            style={[styles.experienceBarFill, { width: `${experienceWidth}%` }]}
-          ></View>
+        <Text style={styles.level}>Level</Text>
+        <View style={styles.experienceBarContainer}>
+          <View style={[styles.experienceBarFill, { width: `${experienceWidth}%` }]}></View>
         </View>
       </View>
       <View style={styles.experienceBarFillText}>
-        <Text>
-          {experienceWidth} / {maxExperience}
-        </Text>
+        <Text>{experience} / {maxExperience}</Text>
       </View>
       <View style={styles.MissionSection}>
         <View style={styles.missionTextSection}>
-          <Text style={styles.missionText}>Mission</Text>
+          <Text style={styles.missionText}>Missions</Text>
         </View>
         <ScrollView style={styles.missionList}>
-          {missions.map((mission) => (
-            <MissionComponents mission={mission} key={mission.id} />
+          {missions && missions.map((mission: any) => (
+            <MissionComponents
+              key={mission.missionId}
+              mission={mission}
+              onUpdateMissionStatus={handleUpdateMissionStatus} // Pass the handler function
+            />
           ))}
         </ScrollView>
       </View>
@@ -80,17 +129,17 @@ const styles = StyleSheet.create({
   },
   experienceBarFillText: {
     alignItems: "center",
-    // fontWeight: "bold",
   },
   MissionSection: {
     width: "100%",
-    height: "80%",
+    height: '75%',
     alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 16,
+    justifyContent: "center",
+
+
   },
   missionTextSection: {
-    height: "10%",
+
     width: "100%",
     alignItems: "center",
   },

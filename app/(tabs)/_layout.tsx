@@ -1,3 +1,4 @@
+import React, { useRef, useCallback, useState } from 'react';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
@@ -5,18 +6,19 @@ import {
 } from "@react-navigation/material-top-tabs";
 import { ParamListBase, TabNavigationState } from "@react-navigation/native";
 import { withLayoutContext } from "expo-router";
-import React, { useRef, useCallback, useState } from "react";
 import FloatButton from "@/components/fab/FloatButton";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import { Portal, Provider, Modal, Text, Button } from 'react-native-paper';
-import Saving from "@/components/bottomSheets/Saving";
-import Expanse from "@/components/bottomSheets/Expanse";
 import { View, StyleSheet, Image } from "react-native";
 
-const coinsImg = require('@/assets/images/coins.png')
-const expenseImg = require('@/assets/images/expense.png')
+import Saving from "@/components/bottomSheets/Saving";
+import Expanse from "@/components/bottomSheets/Expanse";
+
+const coinsImg = require('@/assets/images/coins.png');
+const expenseImg = require('@/assets/images/expense.png');
+
 const { Navigator } = createMaterialTopTabNavigator();
 
 export const MaterialTopTabs = withLayoutContext<
@@ -27,11 +29,11 @@ export const MaterialTopTabs = withLayoutContext<
 >(Navigator);
 
 const TabLayout = () => {
-
   const [isBottomSheetOpened, setIsbottomSheetOpened] = useState(false);
-
   const [isSavingModalVisible, setIsSavingModalVisible] = useState(false);
   const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false);
+  const [deposit, setDeposit] = useState<number | null>(null);
+  const [expanseAmount, setExpanseAmount] = useState<number | null>(null); // State to hold expanse amount
 
   const savingSheetRef = useRef<BottomSheetMethods>(null);
   const expanseSheetRef = useRef<BottomSheetMethods>(null);
@@ -44,12 +46,14 @@ const TabLayout = () => {
     expanseSheetRef.current?.expand();
   }, []);
 
-  const handleSaveAction = useCallback(() => {
+  const handleSaveAction = useCallback((depositValue: number) => {
+    setDeposit(depositValue);
     savingSheetRef.current?.close();
     setIsSavingModalVisible(true);
   }, []);
 
-  const handleExpanseSaveAction = useCallback(() => {
+  const handleExpanseSaveAction = useCallback((amount: number) => { // Receive amount from Expanse component
+    setExpanseAmount(amount);
     expanseSheetRef.current?.close();
     setIsExpanseModalVisible(true);
   }, []);
@@ -61,7 +65,6 @@ const TabLayout = () => {
   const closeExpanseModal = useCallback(() => {
     setIsExpanseModalVisible(false);
   }, []);
-
 
   const renderBackdrop = useCallback(
     (
@@ -108,7 +111,7 @@ const TabLayout = () => {
           enablePanDownToClose
           style={styles.bottomSheet}
         >
-          <View >
+          <View>
             <Saving onSavingSubmitted={handleSaveAction} />
           </View>
         </BottomSheet>
@@ -121,21 +124,21 @@ const TabLayout = () => {
           style={styles.bottomSheet}
           keyboardBehavior="extend"
         >
-          <View >
+          <View>
             <Expanse onExpanseSubmitted={handleExpanseSaveAction} />
           </View>
         </BottomSheet>
         <Modal visible={isSavingModalVisible} onDismiss={closeSavingModal} contentContainerStyle={styles.modal}>
           <View style={styles.underline}>
             <Image source={coinsImg} style={styles.image} />
-            <Text style={styles.text}>￥10,000円入金されました!</Text>
+            <Text style={styles.text}>{deposit ? `￥${deposit}円入金されました!` : '入金されました!'}</Text>
           </View>
           <Button onPress={closeSavingModal} style={styles.button} mode="contained">確認</Button>
         </Modal>
         <Modal visible={isExpanseModalVisible} onDismiss={closeExpanseModal} contentContainerStyle={styles.modal}>
           <View style={styles.underline}>
             <Image source={expenseImg} style={styles.image} />
-            <Text style={styles.text}>￥10,000円出金されました!</Text>
+            <Text style={styles.text}>{expanseAmount ? `￥${expanseAmount}円出金されました!` : '出金されました!'}</Text>
           </View>
           <Button onPress={closeExpanseModal} style={styles.button} mode="contained">確認</Button>
         </Modal>

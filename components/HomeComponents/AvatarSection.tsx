@@ -1,13 +1,55 @@
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { getSavingBalance, getCheckingBalance } from "@/app/api/analytics";
-import Scene from '@/components/3d/Scene'
+import Scene from "@/components/3d/Scene";
+import { useQuery } from "@tanstack/react-query";
+
 const AvatarSection = () => {
-  const [checkingBalance, setCheckingBalance] = useState<number>(getCheckingBalance());
-  const [savingBalance, setSavingBalance] = useState<number>(getSavingBalance());
   const formatBalance = (balance: number) => {
     return new Intl.NumberFormat("en-US").format(balance);
   };
+
+  const { isLoading: checkingLoading, error: checkingError, data: checkingBalance } = useQuery({
+    queryKey: ["checkingBalance"],
+    queryFn: async () => {
+      const bearerToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJqb25nd29uMzM0MEBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMDAwODM5MSwiZXhwIjoxNzIwMDQ0MzkxfQ.KkxfUN1FEyZK9czPMNONaTStLxIr-WilKQMEOYNGFYg';
+      const response = await fetch("http://15.168.108.6:8080/api/accounts/1/balance", {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch checking balance");
+      }
+      const data = await response.json();
+      return data.balance;
+    }
+  });
+
+  const { isLoading: savingLoading, error: savingError, data: savingBalance } = useQuery({
+    queryKey: ["savingBalance"],
+    queryFn: async () => {
+      const bearerToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJqb25nd29uMzM0MEBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMDAwODM5MSwiZXhwIjoxNzIwMDQ0MzkxfQ.KkxfUN1FEyZK9czPMNONaTStLxIr-WilKQMEOYNGFYg';
+      const response = await fetch("http://15.168.108.6:8080/api/accounts/1/saving-balance", {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch saving balance");
+      }
+      const data = await response.json();
+      return data.savingBalance;
+    }
+  });
+
+  if (checkingLoading || savingLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (checkingError || savingError) {
+    console.error("Error fetching balances:", checkingError || savingError);
+    return <Text>Error fetching balances</Text>;
+  }
 
   return (
     <View style={styles.AvatarBalanceSection}>
