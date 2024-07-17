@@ -3,7 +3,7 @@ export function getSavingBalance() {
   return response.saving_balance;
 }
 
-export function getCheckingBalance() {
+export function getAccountBalance() {
   const response = { checking_balance: 120000 };
   return response.checking_balance;
 }
@@ -15,7 +15,9 @@ export function getSpendings() {
 
 export async function getTransactions() {
   try {
-    const response = await fetch("https://reactnative.dev/movies.json");
+    const response = await fetch(
+      "http://10.0.2.2:3000/api/accounts/1/transactions"
+    );
     const json = await response.json();
     return json;
   } catch (error) {
@@ -23,15 +25,12 @@ export async function getTransactions() {
   }
 }
 
-export function getChartsData() {
-  const data = [
-    { month: 1, spendings: 13000 },
-    { month: 2, spendings: 16500 },
-    { month: 3, spendings: 14250 },
-    { month: 4, spendings: 19000 },
-    { month: 5, spendings: 21000 },
-    { month: 6, spendings: 12120 },
-  ];
-
-  return data;
+export async function getChartsData() {
+  try {
+    const response = await fetch("http://10.0.2.2:3000/api/accounts/1/expense");
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
 }
