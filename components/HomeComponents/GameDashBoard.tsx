@@ -1,29 +1,29 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import MissionComponents from "./MissionComponents"; // Import your MissionComponents component
+import MissionComponents from "./MissionComponents";
 
 // API fetch functions
 const getExperience = async () => {
-  const response = await fetch("http://15.168.108.6:8080/api/member/1/exp");
+  const response = await fetch("http://10.0.2.2:3000/api/member/1/exp");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
   const data = await response.json();
-  return data.exp;
+  return data.rankpoint;
 };
 
 const getMissions = async () => {
-  const response = await fetch("http://15.168.108.6:8080/api/member/1/missions");
+  const response = await fetch("http://10.0.2.2:3000/api/members/1/missions");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
   const data = await response.json();
-  return data.missions;
+  return data
 };
 
 const GameDashBoard = () => {
-  const { isLoading: expLoading, error: expError, data: experience } = useQuery({
+  const { isLoading: expLoading, error: expError, data: experience, refetch: refetchExp } = useQuery({
     queryKey: ["experience"],
     queryFn: getExperience,
   });
@@ -39,12 +39,14 @@ const GameDashBoard = () => {
   // Function to handle mission status update
   const handleUpdateMissionStatus = async (missionId: number) => {
     try {
-      const response = await fetch(`http://15.168.108.6:8080/api/member/1/mission/${missionId}`, {
+      const response = await fetch(`http://10.0.2.2:3000/api/members/1/missions/${missionId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({
+          "is_completed": true
+        }),
       });
 
       if (!response.ok) {
@@ -56,6 +58,7 @@ const GameDashBoard = () => {
 
       // Refetch missions after successful update
       refetchMissions();
+      refetchExp();
     } catch (error) {
       console.log("Error updating mission status:", error);
     }
@@ -87,7 +90,7 @@ const GameDashBoard = () => {
         <ScrollView style={styles.missionList}>
           {missions && missions.map((mission: any) => (
             <MissionComponents
-              key={mission.missionId}
+              key={mission.member_mission_id}
               mission={mission}
               onUpdateMissionStatus={handleUpdateMissionStatus} // Pass the handler function
             />

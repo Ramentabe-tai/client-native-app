@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
@@ -15,6 +15,7 @@ import { View, StyleSheet, Image } from "react-native";
 
 import Saving from "@/components/bottomSheets/Saving";
 import Expanse from "@/components/bottomSheets/Expanse";
+import { useQueryClient } from '@tanstack/react-query';
 
 const coinsImg = require('@/assets/images/coins.png');
 const expenseImg = require('@/assets/images/expense.png');
@@ -29,6 +30,8 @@ export const MaterialTopTabs = withLayoutContext<
 >(Navigator);
 
 const TabLayout = () => {
+  const queryClient = useQueryClient();
+
   const [isBottomSheetOpened, setIsbottomSheetOpened] = useState(false);
   const [isSavingModalVisible, setIsSavingModalVisible] = useState(false);
   const [isExpanseModalVisible, setIsExpanseModalVisible] = useState(false);
@@ -37,6 +40,40 @@ const TabLayout = () => {
 
   const savingSheetRef = useRef<BottomSheetMethods>(null);
   const expanseSheetRef = useRef<BottomSheetMethods>(null);
+
+  const fetchSavingBalance = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:3000/api/accounts/1/saving-balance');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Saving balance:', data);
+      } else {
+        console.error('Failed to fetch saving balance');
+      }
+    } catch (error) {
+      console.error('Error fetching saving balance:', error);
+    }
+  };
+
+  const fetchAccountBalance = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:3000/api/accounts/1/balance');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Account balance:', data);
+      } else {
+        console.error('Failed to fetch account balance');
+      }
+    } catch (error) {
+      console.error('Error fetching account balance:', error);
+    }
+  };
+
+  const refetchBalances = useCallback(() => {
+    queryClient.refetchQueries({ queryKey: ["checkingBalance"] });
+    queryClient.refetchQueries({ queryKey: ["savingBalance"] });
+  }, [queryClient]);
+
 
   const handleOpenSavingSheet = useCallback(() => {
     savingSheetRef.current?.expand();
@@ -60,11 +97,13 @@ const TabLayout = () => {
 
   const closeSavingModal = useCallback(() => {
     setIsSavingModalVisible(false);
-  }, []);
+    refetchBalances();
+  }, [refetchBalances]);
 
   const closeExpanseModal = useCallback(() => {
     setIsExpanseModalVisible(false);
-  }, []);
+    refetchBalances();
+  }, [refetchBalances]);
 
   const renderBackdrop = useCallback(
     (

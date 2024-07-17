@@ -11,36 +11,30 @@ const AvatarSection = () => {
   const { isLoading: checkingLoading, error: checkingError, data: checkingBalance } = useQuery({
     queryKey: ["checkingBalance"],
     queryFn: async () => {
-      const bearerToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJqb25nd29uMzM0MEBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMDAwODM5MSwiZXhwIjoxNzIwMDQ0MzkxfQ.KkxfUN1FEyZK9czPMNONaTStLxIr-WilKQMEOYNGFYg';
-      const response = await fetch("http://15.168.108.6:8080/api/accounts/1/balance", {
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-        },
-      });
+      const response = await fetch("http://10.0.2.2:3000/api/accounts/1/balance");
       if (!response.ok) {
         throw new Error("Failed to fetch checking balance");
       }
       const data = await response.json();
       return data.balance;
-    }
+    },
+    staleTime: 0,
+
   });
 
   const { isLoading: savingLoading, error: savingError, data: savingBalance } = useQuery({
     queryKey: ["savingBalance"],
     queryFn: async () => {
-      const bearerToken = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJqb25nd29uMzM0MEBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMDAwODM5MSwiZXhwIjoxNzIwMDQ0MzkxfQ.KkxfUN1FEyZK9czPMNONaTStLxIr-WilKQMEOYNGFYg';
-      const response = await fetch("http://15.168.108.6:8080/api/accounts/1/saving-balance", {
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-        },
-      });
+      const response = await fetch("http://10.0.2.2:3000/api/accounts/1/saving-balance");
       if (!response.ok) {
         throw new Error("Failed to fetch saving balance");
       }
       const data = await response.json();
-      return data.savingBalance;
-    }
+      return data.saving;
+    },
+    staleTime: 0,
   });
+
 
   if (checkingLoading || savingLoading) {
     return <Text>Loading...</Text>;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Chip, TextInput, Button } from 'react-native-paper';
-import { MaterialCommunityIcons, FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Input, Icon } from '@rneui/themed';
 
 interface Category {
-    categoryId: number;
-    categoryName: string;
+    category_id: number;
+    category_name: string;
 }
 
 interface ExpanseProps {
@@ -25,7 +25,7 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch('http://15.168.108.6:8080/api/categories');
+            const response = await fetch('http://10.0.2.2:3000/api/categories');
             if (response.ok) {
                 const categoriesData: Category[] = await response.json();
                 setCategories(categoriesData);
@@ -38,9 +38,9 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
     };
 
     const handleCategoryPress = (categoryName: string) => {
-        const selectedCategory = categories.find(cat => cat.categoryName === categoryName);
+        const selectedCategory = categories.find(cat => cat.category_name === categoryName);
         if (selectedCategory) {
-            setSelectedCategoryId(selectedCategory.categoryId);
+            setSelectedCategoryId(selectedCategory.category_id);
         }
     };
 
@@ -55,13 +55,13 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
                     amount: amount,
                     memo: memo,
                     categoryId: selectedCategoryId,
+                    memberId: 1 //const for now
                 };
-
-                const response = await fetch('http://15.168.108.6:8080/api/accounts/1/expense', {
+                console.log(postData)
+                const response = await fetch('http://10.0.2.2:3000/api/accounts/1/expense', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJqb25nd29uMzM0MEBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMDAwODM5MSwiZXhwIjoxNzIwMDQ0MzkxfQ.KkxfUN1FEyZK9czPMNONaTStLxIr-WilKQMEOYNGFYg', // Replace with your actual token
                     },
                     body: JSON.stringify(postData),
                 });
@@ -72,7 +72,7 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
                     // Notify parent component that the expense has been submitted
                     onExpanseSubmitted(amount);
                 } else {
-                    console.error('Error:', response.statusText);
+                    console.error('Error:', response);
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -111,11 +111,11 @@ export default function Expanse({ onExpanseSubmitted }: ExpanseProps) {
             <View style={styles.iconChipContainer}>
                 {categories.map((category) => (
                     <Chip
-                        key={category.categoryId}
-                        onPress={() => handleCategoryPress(category.categoryName)}
-                        style={[styles.iconChip, selectedCategoryId === category.categoryId && styles.selectedChip]}
+                        key={category.category_id}
+                        onPress={() => handleCategoryPress(category.category_name)}
+                        style={[styles.iconChip, selectedCategoryId === category.category_id && styles.selectedChip]}
                     >
-                        {category.categoryName}
+                        {category.category_name}
                     </Chip>
                 ))}
             </View>
@@ -186,24 +186,3 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
 });
-
-const getCategoryIcon = (categoryName: string) => {
-    switch (categoryName) {
-        case "買い物":
-            return () => (<FontAwesome name="shopping-bag" size={20} color="red" />);
-        case "衣類":
-            return () => (<Ionicons name="shirt" size={20} color="blue" />);
-        case "ショッピング":
-            return () => (<MaterialCommunityIcons name="baguette" size={20} color="green" />);
-        case "旅行":
-            return () => (<FontAwesome name="suitcase" size={20} color="orange" />);
-        case "外食":
-            return () => (<Ionicons name="restaurant" size={20} color="pink" />);
-        case "健康":
-            return () => (<MaterialIcons name="health-and-safety" size={20} color="gray" />);
-        case "交通":
-            return () => (<FontAwesome name="train" size={20} color="black" />);
-        default:
-            return () => null;
-    }
-};

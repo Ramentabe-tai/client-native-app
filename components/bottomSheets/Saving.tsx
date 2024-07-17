@@ -4,7 +4,7 @@ import { Input, Icon } from '@rneui/themed';
 import { Chip, Button } from 'react-native-paper';
 
 interface SavingProps {
-    onSavingSubmitted: (deposit: number) => void; // Updated to pass deposit value
+    onSavingSubmitted: (deposit: number) => void;
 }
 
 export default function Saving({ onSavingSubmitted }: SavingProps) {
@@ -18,13 +18,12 @@ export default function Saving({ onSavingSubmitted }: SavingProps) {
         const memo = "test income"; // Constant value for memo
         if (amount !== null) {
             try {
-                const response = await fetch('http://15.168.108.6:8080/api/accounts/1/income', {
+                const response = await fetch('http://10.0.2.2:3000/api/accounts/1/income', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiJqb25nd29uMzM0MEBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcyMDAwODM5MSwiZXhwIjoxNzIwMDQ0MzkxfQ.KkxfUN1FEyZK9czPMNONaTStLxIr-WilKQMEOYNGFYg', // Replace with your actual token
                     },
-                    body: JSON.stringify({ amount, memo }),
+                    body: JSON.stringify({ amount, memo, memberId: 1 }),
                 });
 
                 if (response.ok) {
@@ -35,10 +34,13 @@ export default function Saving({ onSavingSubmitted }: SavingProps) {
                     console.log('Message:', message);
 
                     // Notify parent component that the saving has been submitted
-                    onSavingSubmitted(deposit); // Pass deposit value to parent component
+                    onSavingSubmitted(deposit);
+
+                    // Reset amount after successful submission
+                    setAmount(null);
                 } else {
-                    // Handle errors
-                    console.error('Error:', response.statusText);
+                    const errorText = await response.text();
+                    console.error('Error:', response.status, errorText);
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -49,44 +51,77 @@ export default function Saving({ onSavingSubmitted }: SavingProps) {
     };
 
     return (
-        <>
-            <View>
-                <Text>金額</Text>
-                <Input
-                    containerStyle={{ width: 'auto' }}
-                    disabledInputStyle={{ backgroundColor: '#ddd' }}
-                    inputContainerStyle={{}}
-                    inputStyle={{ textAlign: 'right', padding: 5 }}
-                    rightIcon={<Icon name="close" size={20} onPress={() => setAmount(null)} />}
-                    rightIconContainerStyle={{}}
-                    placeholder="¥ 10,000 "
-                    onChangeText={(value) => setAmount(Number(value))}
-                    value={amount?.toString() || ''}
-                />
-            </View>
+        <View style={styles.container}>
+            <Text style={styles.label}>金額</Text>
+            <Input
+                containerStyle={styles.inputContainer}
+                inputContainerStyle={styles.inputInnerContainer}
+                inputStyle={styles.input}
+                rightIcon={<Icon name="close" size={20} onPress={() => setAmount(null)} />}
+                placeholder="¥ 10,000"
+                keyboardType="numeric"
+                onChangeText={(value) => setAmount(value ? Number(value) : null)}
+                value={amount?.toString() || ''}
+            />
             <View style={styles.chipContainer}>
-                <Chip onPress={() => handleChipPress(3000)} mode="outlined" style={styles.chip}>3,000</Chip>
-                <Chip onPress={() => handleChipPress(5000)} mode="outlined" style={styles.chip}>5,000</Chip>
-                <Chip onPress={() => handleChipPress(7000)} mode="outlined" style={styles.chip}>7,000</Chip>
-                <Chip onPress={() => handleChipPress(10000)} mode="outlined" style={styles.chip}>10,000</Chip>
+                {[3000, 5000, 7000, 10000].map((value) => (
+                    <Chip
+                        key={value}
+                        onPress={() => handleChipPress(value)}
+                        mode="outlined"
+                        style={[styles.chip, amount === value && styles.selectedChip]}
+                    >
+                        {value.toLocaleString()}
+                    </Chip>
+                ))}
             </View>
-
-            <Button mode="contained" onPress={handleSubmit} style={{ marginTop: 20, marginHorizontal: 10, backgroundColor: '#F48E35' }}>
+            <Button
+                mode="contained"
+                onPress={handleSubmit}
+                style={styles.submitButton}
+                disabled={amount === null}
+            >
                 入金
             </Button>
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 10,
+    },
+    label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: '#F48E35',
+    },
+    inputContainer: {
+        paddingHorizontal: 0,
+    },
+    inputInnerContainer: {
+        borderBottomColor: '#F48E35',
+    },
+    input: {
+        textAlign: 'right',
+        padding: 5,
+    },
     chipContainer: {
         flexDirection: 'row',
-        marginHorizontal: 10,
-        marginBottom: 20,
-        alignItems: 'center',
+        flexWrap: 'wrap',
+        marginVertical: 10,
     },
     chip: {
-        marginHorizontal: 3,
+        marginRight: 5,
+        marginBottom: 5,
         borderColor: '#F48E35',
+    },
+    selectedChip: {
+        backgroundColor: '#F48E35',
+    },
+    submitButton: {
+        marginTop: 20,
+        backgroundColor: '#F48E35',
     },
 });
