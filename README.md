@@ -1,5 +1,6 @@
 # Client Native app 🚀
 
+貯金 Quests の　 Client アプリです。
 [`create-expo-app`](https://www.npmjs.com/package/create-expo-app) で作成した React Native [Expo](https://expo.dev) アプリです。
 
 ## Get started
