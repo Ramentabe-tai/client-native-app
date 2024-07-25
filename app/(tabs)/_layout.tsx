@@ -42,8 +42,8 @@ const TabLayout = () => {
   const expanseSheetRef = useRef<BottomSheetMethods>(null);
 
   const refetchBalances = useCallback(() => {
-    queryClient.refetchQueries({ queryKey: ["checkingBalance"] });
-    queryClient.refetchQueries({ queryKey: ["savingBalance"] });
+    queryClient.refetchQueries({ queryKey: ["balance"] });
+    queryClient.refetchQueries({ queryKey: ["saving"] });
   }, [queryClient]);
 
 

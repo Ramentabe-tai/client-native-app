@@ -28,13 +28,12 @@ export default function Saving({ onSavingSubmitted }: SavingProps) {
 
                 if (response.ok) {
                     const responseData = await response.json();
-                    const { deposit, message } = responseData;
+                    const { message } = responseData;
 
-                    console.log('Deposit:', deposit);
                     console.log('Message:', message);
 
                     // Notify parent component that the saving has been submitted
-                    onSavingSubmitted(deposit);
+                    onSavingSubmitted(amount);
 
                     // Reset amount after successful submission
                     setAmount(null);

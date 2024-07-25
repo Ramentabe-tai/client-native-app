@@ -9,7 +9,7 @@ const AvatarSection = () => {
   };
 
   const { isLoading: checkingLoading, error: checkingError, data: checkingBalance } = useQuery({
-    queryKey: ["checkingBalance"],
+    queryKey: ["balance"],
     queryFn: async () => {
       const response = await fetch("http://10.0.2.2:3000/api/accounts/1/balance");
       if (!response.ok) {
@@ -23,7 +23,7 @@ const AvatarSection = () => {
   });
 
   const { isLoading: savingLoading, error: savingError, data: savingBalance } = useQuery({
-    queryKey: ["savingBalance"],
+    queryKey: ["saving"],
     queryFn: async () => {
       const response = await fetch("http://10.0.2.2:3000/api/accounts/1/saving-balance");
       if (!response.ok) {
